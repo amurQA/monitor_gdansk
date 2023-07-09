@@ -9,7 +9,7 @@ async def main():
 
     date_generator = DateGenerator()
     year_day_1 = date_generator.get_current_yyyy_mm()
-    year_day_2 = date_generator.get_next_month_yyyy_mm()
+    year_day_2 = '2023-11'
 
     telegram_bot = TelegramIntegrate(bot_token)
     await telegram_bot.get_chats_ids()
