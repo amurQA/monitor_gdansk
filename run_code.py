@@ -1,19 +1,22 @@
 import asyncio
 from monitor import SlotChecker
 from telegram_integrate import TelegramIntegrate
+from date import DateGenerator
 
 async def main():
     bot_token = '6016811546:AAFAHaTia6hIHnN20rJcXNR3t3QTG1L6_jk'
-    year_day_1 = "2023-08"
-    year_day_2 = "2023-07"
     interval = 100
+
+    date_generator = DateGenerator()
+    year_day_1 = date_generator.get_current_yyyy_mm()
+    year_day_2 = date_generator.get_next_month_yyyy_mm()
 
     telegram_bot = TelegramIntegrate(bot_token)
     await telegram_bot.get_chats_ids()
     slot_checker = SlotChecker(year_day_1, year_day_2, interval)
     slot_checker.send_message = telegram_bot.send_message  # Подменяем метод отправки сообщения
 
-    # # Запускаем слушателя Telegram
+    # Запускаем слушателя Telegram
     # await telegram_bot.start_polling()
 
     # Запускаем мониторинг дат
