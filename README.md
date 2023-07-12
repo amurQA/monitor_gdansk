@@ -6,7 +6,7 @@ Monitor Gdansk is a minimal viable product (MVP) for monitoring available dates 
 Python 3.7 or higher
 Required packages are listed in requirements.txt. Install them using the command: 
 
-## pip install -r requirements.txt
+`pip install -r requirements.txt`
 
 # Getting Started
 
