@@ -1,6 +1,6 @@
-# Monitor gdansk
+# Monitor Gdansk
 
-Monitor_Gdansk is a minimal viable product (MVP) for monitoring available dates and time slots for applying for Karta Pobuty in Gdansk, Poland. It periodically checks for available dates & times and sends notifications to a Telegram channel if there are any dates in the next 2 months.
+Monitor Gdansk is a minimal viable product (MVP) for monitoring available dates and time slots for applying for Karta Pobuty in Gdansk, Poland. It periodically checks for available dates & times and sends notifications to a Telegram channel if there are any dates in the next 2 months.
 
 # Prerequisites
 Python 3.7 or higher
