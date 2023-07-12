@@ -17,6 +17,8 @@ class SlotChecker:
         # Получаем список дат
         dates = data["DATES"]
         print(', '.join(dates)) # Объединяем даты в одну строку
+        # Собираем все сообщения в одну переменную
+        message = ''
         # Мониторим даты и проверяем доступность временных слотов
         for date in dates:
             # Преобразуем дату в требуемый формат "год-месяц-день"
@@ -37,13 +39,17 @@ class SlotChecker:
 
                 # Проверяем количество доступных слотов
                 if len(times_raw) == 1:
-                    await self.send_message(f"Доступна дата c 1 слотом: {formatted_date} Время: {times}")
+                    message += f"Доступна дата c 1 слотом: {formatted_date} Время: {times}\n"
                 elif len(times_raw) >= 2:
-                    await self.send_message(f"Доступна дата с несколькими слотами: {formatted_date} Время: {times}")
+                    message += f"Доступна дата с несколькими слотами: {formatted_date} Время: {times}\n"
+        # Отправляем собранное сообщение
+        if message != '':
+          await self.send_message(message)
 
     async def monitor_dates_in_interval(self):
         # Запускаем проверку дат раз в определенный интервал
         while True:
+            print(datetime.now())
             await self.check_slots()
             time.sleep(self.interval)
     def send_message(self, message):
