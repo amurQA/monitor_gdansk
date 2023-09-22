@@ -15,15 +15,15 @@ async def main():
     telegram_bot = TelegramIntegrate(bot_token, channel_id)
     slot_checker = SlotChecker(year_day_1, year_day_2, interval)
 
-    # Подменяем метод отправки сообщения
+    # Change the send message method at telegram_bot instance
     slot_checker.send_message = telegram_bot.send_message  
 
-    # Запускаем мониторинг дат
+    # Run monitoring of dates
     await slot_checker.monitor_dates_in_interval()
 
 
 if __name__ == "__main__":
-    # keep_alive()
+    
     # Create a new event loop and set it as the current event loop
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)

@@ -11,47 +11,57 @@ class SlotChecker:
         self.interval = interval
 
     async def check_slots(self):
-        # Отправляем GET-запрос для получения дат
+        
+        # Send GET-request to get the dates
         response = requests.get(self.date_url)
         data = response.json()
-        # Получаем список дат
+
+        # Get the list of dates
         dates = data["DATES"]
-        print(', '.join(dates)) # Объединяем даты в одну строку
-        # Собираем все сообщения в одну переменную
+
+        # Join dates into one row
+        print(', '.join(dates))
+
+        # Join all the messages into one variable
         message = ''
-        # Мониторим даты и проверяем доступность временных слотов
+
+        # Monitor the dates and check time spaces presence
         for date in dates:
-            # Преобразуем дату в требуемый формат "год-месяц-день"
+
+           # Convert the date to the required year-month-day format
             formatted_date = datetime.strptime(date, "%d/%m/%Y").strftime("%Y-%m-%d")
 
-            # Проверяем, является ли дата в одной месяце или в другом
+            # Check if the date is in one month or another
             if formatted_date.startswith(self.year_day_1) or formatted_date.startswith(self.year_day_2):
-                # Формируем полный URL для запроса временных слотов
+                # Form the full URL for requesting time slots
                 full_time_url = self.time_url + formatted_date
 
-                # Отправляем GET-запрос для получения временных слотов
+               # Send a GET request to get time slots
                 response = requests.get(full_time_url)
                 time_all_data = response.json()
 
-                # Получаем список временных слотов
+                # Get a list of time slots
                 times_raw = time_all_data.get("TIMES", [])
                 times = ', '.join([i['time'] for i in times_raw])
 
-                # Проверяем количество доступных слотов
+                # Check the number of available slots
                 if len(times_raw) == 1:
                     message += f"Доступна дата c 1 слотом: {formatted_date} Время: {times}\n"
                 elif len(times_raw) >= 2:
                     message += f"Доступна дата с несколькими слотами: {formatted_date} Время: {times}\n"
-        # Отправляем собранное сообщение
+
+        # Send the message
         if message != '':
           await self.send_message(message)
 
     async def monitor_dates_in_interval(self):
-        # Запускаем проверку дат раз в определенный интервал
+
+        # Start checking dates once every certain interval
         while True:
             print(datetime.now())
             await self.check_slots()
             time.sleep(self.interval)
     def send_message(self, message):
-        # Отправляем сообщение любым способом
+
+        # Send a message
         pass
